@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -24,11 +25,14 @@ class GitHubController extends Controller
                 'name' => $githubUser->getName() ?? $githubUser->getNickname(),
                 'password' => bcrypt(str()->random(24)),
                 'email_verified_at' => now(),
+                'avatar' => $githubUser->getAvatar(),
+                'github_id' => $githubUser->getId(),
             ]
         );
 
+        $user->assignRole('user');
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/dashboard'); 
     }
 }
