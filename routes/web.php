@@ -16,5 +16,6 @@ Route::get('/auth/github', action: [GitHubController::class,'redirect'])->name('
 
 Route::get('/auth/github/callback', action: [GitHubController::class,'callback'])->name('github.callback');
 
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
