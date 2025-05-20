@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\GitHubController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,9 +13,13 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/auth/github', action: [GitHubController::class,'redirect'])->name('github.redirect');
+Route::group(['middleware' => ['role:admin'],'prefix'=>'admin'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+});
 
-Route::get('/auth/github/callback', action: [GitHubController::class,'callback'])->name('github.callback');
+Route::group(['middleware' => ['role:doctor'],'prefix'=>'doctor'], function () {
+    Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('doctor.dashboard');
+});
 
 
 require __DIR__.'/settings.php';
