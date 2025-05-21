@@ -24,6 +24,8 @@ import {
   DatePickerRoot,
   DatePickerTrigger,
 } from 'radix-vue'
+import { Type } from '@/types/Type';
+import { User } from '@/types/User';
 
 
 const form = useForm({
@@ -38,6 +40,12 @@ const preferences = [
 ];
 
 const locale = ref(preferences[0].locale)
+interface TimeSlotProps {
+    types: Type[];
+    user: User;
+
+}
+const props = defineProps<TimeSlotProps>();
 
 watch(() => form.date, (newValue) => {
   form.date = String(newValue);

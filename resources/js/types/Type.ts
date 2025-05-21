@@ -1,7 +1,7 @@
 import { Type } from "lucide-vue-next";
 import { Pagination } from "./Pagination";
 
-export type Type{
+export type Type={
     id: number,
     name: string,
     description: string
