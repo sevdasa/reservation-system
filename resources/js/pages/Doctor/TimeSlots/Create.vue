@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import InputLabel from "@/components/InputLabel.vue";
+import { Icon } from '@iconify/vue'
+
 import {
   DatePickerArrow,
   DatePickerCalendar,

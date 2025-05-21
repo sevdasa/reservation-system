@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Auth\GitHubController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\TimeSlotsController;
 use Illuminate\Support\Facades\Route;
