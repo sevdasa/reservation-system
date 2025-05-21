@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\GitHubController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -56,7 +57,8 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 });
 
-Route::middleware('auth')->prefix('auth/github')->group(function () {
+Route::middleware('web')->prefix('auth/github')->group(function () {
+ 
     Route::get('/', action: [GitHubController::class,'redirect'])->name('github.redirect');
     Route::get('/callback', action: [GitHubController::class,'callback'])->name('github.callback');
 });
