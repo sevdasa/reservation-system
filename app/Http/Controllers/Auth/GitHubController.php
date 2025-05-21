@@ -17,7 +17,8 @@ class GitHubController extends Controller
 
     public function callback()
     {
-        $githubUser = Socialite::driver('github')->user();
+        //ToDo bug fix in without stateless
+        $githubUser = Socialite::driver('github')->stateless()->user();
 
         $user = User::updateOrCreate(
             ['email' => $githubUser->getEmail()],
@@ -30,7 +31,7 @@ class GitHubController extends Controller
             ]
         );
 
-        $user->assignRole('user');
+        $user->assignRole('doctor');
         Auth::login($user);
 
         return redirect('/dashboard'); 
