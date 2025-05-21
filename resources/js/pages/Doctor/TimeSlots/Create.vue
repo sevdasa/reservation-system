@@ -48,8 +48,8 @@ function submit() {
 </script>
 
 <template>
-  <div class="max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-lg">
-    <h1 class="text-2xl font-extrabold mb-6 text-gray-900">ثبت تایم‌ جدید</h1>
+  <div class="max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-lg text-right">
+    <h1 class="text-2xl font-extrabold mb-6 text-gray-900 text-right">ثبت تایم‌ جدید</h1>
 
     <form @submit.prevent="submit" class="space-y-6">
       <div class="transition-opacity duration-300">
