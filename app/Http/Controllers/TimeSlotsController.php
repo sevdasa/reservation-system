@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TimeSlots;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -13,10 +14,12 @@ class TimeSlotsController extends Controller
     {
         // dd(auth()->user);
         $user = Auth::user();
+        $bookable=$user->bookable;
         return Inertia::render(
             'Doctor/TimeSlots/Create',
             [
                 'user' =>$user,
+                'bookable'=>$bookable
             ]
         );
         // return inertia('Doctor/TimeSlots/Create');
