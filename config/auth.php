@@ -39,6 +39,14 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ] ,
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'bookable' => [
+            'driver' => 'session',
+            'provider' => 'bookables',
         ],
     ],
 
@@ -63,6 +71,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        'bookables' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Bookable::class,
         ],
 
         // 'users' => [

@@ -199,4 +199,7 @@ return [
 
         'store' => 'default',
     ],
+    
+    'guards' => ['web', 'admin', 'bookable'],
+
 ];

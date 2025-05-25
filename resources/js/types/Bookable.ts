@@ -1,4 +1,5 @@
 import { Pagination } from "./Pagination"
+import { TimeSlot } from "./TimeSlot"
 import { Type } from "./Type"
 import { User } from "./User"
 
@@ -9,6 +10,7 @@ export type Bookable = {
     type_id: number
     type: Type
     user: User
+    time_slots: TimeSlot[]
     created_at: string
     updated_at: string
 }

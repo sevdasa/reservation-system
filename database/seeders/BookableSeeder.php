@@ -14,14 +14,23 @@ class BookableSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create();
-        $user->assignRole('doctor');
+        if (User::where('email', 'sevdasazdar@gmail.com')->exists()) {
+            $user = User::where('email', 'sevdasazdar@gmail.com')->first();
+        } else {
+            $user = User::factory()->create();
+        }
+        
         $type = Type::factory()->create();
-        Bookable::create([
-            'name' => 'test',
+        
+        $bookable = Bookable::create([
+            'name' => $user->name,
             'description' => 'doctor',
             'type_id' => $type->id,
             'user_id' => $user->id,
         ]);
+        
+        // به مدل bookable نقش doctor با گارد bookable بده
+        $bookable->assignRole('doctor');
+        
     }
 }

@@ -18,8 +18,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -36,7 +35,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:bookable')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -63,3 +62,7 @@ Route::middleware('web')->prefix('auth/github')->group(function () {
     Route::get('/callback', action: [GitHubController::class,'callback'])->name('github.callback');
 });
 
+// Route::prefix('auth/github')->group(function () {
+//     Route::get('/', action: [GitHubController::class, 'redirect'])->name('github.redirect');
+//     Route::get('/callback', action: [GitHubController::class, 'callback'])->name('github.callback');
+// });

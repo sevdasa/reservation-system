@@ -73,7 +73,7 @@ const submit = () => {
 
             <div class="text-center text-sm text-muted-foreground">
                 Don't have an account?
-                <TextLink :href="route('register')" :tabindex="5">Sign up</TextLink>
+                <TextLink :href="route('bookable.register')" :tabindex="5">Sign up</TextLink>
                 <!-- <p>kjgjkgjkgkj</p> -->
             </div>
         </form>
