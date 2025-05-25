@@ -48,4 +48,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function bookable()  {
+        return $this->hasOne(Bookable::class);
+    }
 }
