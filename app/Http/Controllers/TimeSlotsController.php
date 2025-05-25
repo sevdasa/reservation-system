@@ -2,64 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Bookable\TimeSlotStoreRequest;
+use App\Http\Requests\Bookable\TimeSlotUpdateRequest;
+use App\Models\Bookable;
 use App\Models\TimeSlots;
-use App\Models\Type;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TimeSlotsController extends Controller
 {
+    public function index(){
+        return Inertia::render("Bookable/TimeSlots/Index", [
+            'timeSlots' => TimeSlots::where('bookable_id', Auth::user()->bookable->id)->get(),
+            'user' => Auth::user(),
+            'bookables'=>Bookable::with(['timeSlots','user','type'])->get(),
+        ]);
+    }
     public function create()
     {
-        // dd(auth()->user);
         $user = Auth::user();
         $bookable=$user->bookable;
         return Inertia::render(
-            'Doctor/TimeSlots/Create',
+            'Bookable/TimeSlots/Create',
             [
                 'user' =>$user,
                 'bookable'=>$bookable
             ]
         );
-        // return inertia('Doctor/TimeSlots/Create');
     }
 
-    public function store(Request $request)
+    public function store(TimeSlotStoreRequest $request)
     {
-        // Validate and create a new time slot
-        $validatedData = $request->validate([
-            'bookable_id' => 'required|exists:bookables,id',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i',
-            'date' => 'required|date',
-            'is_booked' => 'boolean',
-        ]);
-
-        $timeSlot = TimeSlots::create($validatedData);
-
-        return response()->json($timeSlot, 201);
+        $validatedData = $request->validated();
+        TimeSlots::create($validatedData);
+        return redirect()->back();
     }
 
-    public function update(Request $request, $id)
+    public function update(TimeSlotUpdateRequest $request, $id)
     {
-        // Validate and update an existing time slot
-        $validatedData = $request->validate([
-            'bookable_id' => 'sometimes|required|exists:bookables,id',
-            'start_time' => 'sometimes|required|date_format:H:i',
-            'end_time' => 'sometimes|required|date_format:H:i',
-            'date' => 'sometimes|required|date',
-            'is_booked' => 'sometimes|boolean',
-        ]);
-
+        $validatedData = $request->validated();
         $timeSlot = TimeSlots::find($id);
         if (! $timeSlot) {
-            return response()->json(['message' => 'Time slot not found'], 404);
+            return redirect()->back()->withErrors(['message' => 'Time slot not found'])->setStatusCode(404);
         }
 
         $timeSlot->update($validatedData);
 
-        return response()->json($timeSlot);
+        return redirect()->back();
+
     }
 
     public function destroy($id)
@@ -67,11 +57,11 @@ class TimeSlotsController extends Controller
         // Delete a time slot
         $timeSlot = TimeSlots::find($id);
         if (! $timeSlot) {
-            return response()->json(['message' => 'Time slot not found'], 404);
+            return redirect()->back()->withErrors(['message' => 'Time slot not found'])->setStatusCode(404);
         }
 
         $timeSlot->delete();
+        return redirect()->back();
 
-        return response()->json(['message' => 'Time slot deleted successfully']);
     }
 }
