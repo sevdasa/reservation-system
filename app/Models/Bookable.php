@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Bookable extends Model
 {
     /** @use HasFactory<\Database\Factories\BookableFactory> */
-    use HasFactory;
+    use HasFactory,HasRoles;
     protected $fillable = [
         'name',
         'description',
         'user_id',
         'type_id',
     ];
+    protected $guard_name = 'bookable';
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -34,6 +36,6 @@ class Bookable extends Model
     }
     public function timeSlots()
     {
-        return $this->hasMany(TimeSlots::class);
+        return $this->hasMany(TimeSlots::class,'bookable_id');
     }
 }
