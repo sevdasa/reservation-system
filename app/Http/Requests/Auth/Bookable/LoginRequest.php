@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Auth\Bookable;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,13 +40,14 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-        if (! Auth::guard('web')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::guard('bookable')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
             
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
+        // dd(1);
 
         RateLimiter::clear($this->throttleKey());
     }

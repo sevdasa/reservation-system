@@ -78,7 +78,7 @@ return [
         ],
         'bookables' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Bookable::class,
+            'model' => App\Models\UserBookable::class,
         ],
 
         // 'users' => [

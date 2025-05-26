@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolePermissionSeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(BookableSeeder::class);
-
+        $this->call(UserBookableSeeder::class);
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

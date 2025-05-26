@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Bookable;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Bookable\LoginRequest as BookableLoginRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,13 +28,17 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(BookableLoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-dd(auth()->user());
-        $request->user('bookable')->assignRole('doctor');
+        $user = Auth::guard('bookable')->user();
+     
+        if (! $user) {
+            return redirect()->route('login')->withErrors('Authentication failed');
+        }
+
+        $user->assignRole('doctor');
 
         return redirect()->intended(route('bookable.dashboard', absolute: false));
     }

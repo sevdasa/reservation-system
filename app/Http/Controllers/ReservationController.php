@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Reservation\StoreRequest;
 use App\Models\Bookable;
 use App\Models\Reservation;
-use App\Models\TimeSlots;
+use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class ReservationController extends Controller
     public function confirm(Request $request)
     {
         $bookable = Bookable::findOrFail($request->bookable);
-        $slot = TimeSlots::findOrFail($request->slot);
+        $slot = TimeSlot::findOrFail($request->slot);
 
         return Inertia::render('Reservations/Confirm', [
             'bookable' => $bookable,
@@ -25,7 +25,7 @@ class ReservationController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $slot = TimeSlots::findOrFail($request->time_slot_id);
+        $slot = TimeSlot::findOrFail($request->time_slot_id);
         $bookable = Bookable::findOrFail($request->bookable_id);
 
         if ($slot->bookable_id !== $bookable->id) {

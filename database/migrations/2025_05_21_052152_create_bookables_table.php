@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_bookable_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
             $table->foreign('type_id')
             ->references('id')
@@ -23,9 +23,9 @@ return new class extends Migration
             ->onDelete('set null')
             ->cascadeOnUpdate();
             
-            $table->foreign('user_id')
+            $table->foreign('user_bookable_id')
                 ->references('id')
-                ->on('users')
+                ->on('user_bookables')
                 ->onDelete('set null')
                 ->cascadeOnUpdate();
             $table->timestamps();

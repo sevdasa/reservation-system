@@ -17,16 +17,16 @@ class Authenticate
     {
         return $next($request);
     }
-    protected function redirectTo(Request $request): ?string
-    {
-        if (! $request->expectsJson()) {
-            if ($request->is('bookable/*')) {
-                return route('bookable.login');
-            }
+    // protected function redirectTo(Request $request): ?string
+    // {
+    //     if (! $request->expectsJson()) {
+    //         if ($request->is('bookable/*')) {
+    //             return route('bookable.login');
+    //         }
 
-            return route('login');
-        }
+    //         return route('login');
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
-// use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Bookable extends Model
 {
@@ -17,19 +16,21 @@ class Bookable extends Model
     protected $fillable = [
         'name',
         'description',
-        'user_id',
+        'user_bookable_id',
         'type_id',
         'status',
     ];
-    protected $guard_name = 'bookable';
+
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-    public function user()
+
+    public function userBookable()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserBookable::class, 'user_bookable_id');
     }
+
     public function type()
     {
         return $this->belongsTo(Type::class);
@@ -39,8 +40,9 @@ class Bookable extends Model
     {
         return $this->hasMany(Reservation::class);
     }
-    public function timeSlots()
+
+    public function TimeSlots()
     {
-        return $this->hasMany(TimeSlots::class,'bookable_id');
+        return $this->hasMany(TimeSlot::class, 'bookable_id');
     }
 }

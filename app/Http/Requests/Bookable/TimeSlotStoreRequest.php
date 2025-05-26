@@ -4,7 +4,7 @@ namespace App\Http\Requests\Bookable;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TimeSlotStoreRequest extends FormRequest
+class TimeSlottoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

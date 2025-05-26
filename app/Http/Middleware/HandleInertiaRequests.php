@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
-                // 'bookable' => $request->user('bookable'),
+                'bookable' => $request->user('bookable'),
             ],
             'ziggy' => [
                 ...(new Ziggy)->toArray(),

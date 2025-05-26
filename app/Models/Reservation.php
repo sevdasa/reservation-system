@@ -25,13 +25,11 @@ class Reservation extends Model
 
     public function timeSlot()
     {
-        return $this->belongsTo(TimeSlots::class);
+        return $this->belongsTo(TimeSlot::class, 'time_slot_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
- 
 }

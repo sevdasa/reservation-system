@@ -19,7 +19,6 @@ class GitHubController extends Controller
     {
         //ToDo bug fix in without stateless
         $githubUser = Socialite::driver('github')->stateless()->user();
-
         $user = User::updateOrCreate(
             ['email' => $githubUser->getEmail()],
             [
@@ -31,8 +30,8 @@ class GitHubController extends Controller
             ]
         );
 
-        $user->assignRole('doctor');
-        Auth::login($user);
+        $user->assignRole('user');
+        Auth::guard('web')->login($user); 
 
         return redirect('/dashboard'); 
     }
