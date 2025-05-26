@@ -5,16 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Bookable extends Model
 {
     /** @use HasFactory<\Database\Factories\BookableFactory> */
     use HasFactory,HasRoles;
+
+    protected $table = 'bookables';
+
     protected $fillable = [
         'name',
         'description',
         'user_id',
         'type_id',
+        'status',
     ];
     protected $guard_name = 'bookable';
     protected $casts = [
