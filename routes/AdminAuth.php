@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\Bookable\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\Bookable\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\Bookable\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\Bookable\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\Bookable\GitHubController;
 use App\Http\Controllers\Auth\Bookable\RegisteredUserController;
 use App\Http\Controllers\Auth\Bookable\VerifyEmailController;
 use App\Http\Controllers\Settings\PasswordController;
