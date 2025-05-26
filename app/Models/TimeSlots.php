@@ -25,8 +25,13 @@ class TimeSlots extends Model
     {
         return $this->belongsTo(Bookable::class);
     }
-    public function reservations()
+    public function reservation()
     {
         return $this->hasOne(Reservation::class);
+    }
+
+    public function isReserved()
+    {
+        return $this->is_booked;
     }
 }

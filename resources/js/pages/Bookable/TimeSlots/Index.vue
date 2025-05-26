@@ -2,6 +2,9 @@
 import type { Bookable, PaginatedBookable } from '@/types/Bookable';
 import { PaginatedTimeSlot, TimeSlot } from '@/types/TimeSlot';
 import type { User } from '@/types/User';
+import { formatDate,makeFarsi } from "@/lib/TimeUtils";
+import { router } from '@inertiajs/vue3'
+
 
 interface TimeSlotProps {
   bookables: Bookable[];
@@ -9,6 +12,15 @@ interface TimeSlotProps {
   timeSlots: PaginatedTimeSlot[];
 }
 const props = defineProps<TimeSlotProps>();
+
+
+function goToConfirm(bookableId: number, timeSlotId: number) {
+  router.get(route('reservation.confirm'), {
+    bookable: bookableId,
+    slot: timeSlotId,
+  })
+}
+
 </script>
 <template>
     <div class="p-4 space-y-4">
@@ -22,8 +34,15 @@ const props = defineProps<TimeSlotProps>();
           <h2 class="font-medium">⏰ تایم‌ اسلات‌ها:</h2>
           <ul class="list-disc list-inside">
             <li v-for="slot in bookable?.time_slots || []" :key="slot.id">
-              {{ slot.date }} | {{ slot.start_time }} - {{ slot.end_time }}
-            </li>
+              {{ makeFarsi(slot.date) }} |
+             <p> <span>{{ slot.start_time }} - {{ slot.end_time }}</span></p> 
+             <button
+             class="ml-2 px-3 py-1 bg-blue-500 text-white rounded text-sm"
+             @click="goToConfirm(bookable.id, slot.id)"
+             >
+             رزرو
+            </button>
+        </li>
           </ul>
         </div>
       </div>
