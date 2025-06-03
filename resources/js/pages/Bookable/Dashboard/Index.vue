@@ -7,7 +7,7 @@ interface TimeSlotProps {
     user: User;
 
 }
-const props = defineProps<TimeSlotProps>();
+defineProps<TimeSlotProps>();
 </script>
 <template>
     <div class="p-4">

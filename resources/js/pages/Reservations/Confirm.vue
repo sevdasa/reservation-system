@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Bookable } from '@/types/Bookable';
 import { TimeSlot } from '@/types/TimeSlot';
-import { User } from '@/types/User';
 import { router } from '@inertiajs/vue3'
 
 interface TimeSlotProps {

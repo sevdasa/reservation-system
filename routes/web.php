@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'bookable', 'as' => 'bookabl
 Route::group(['middleware' => ['auth'], 'prefix' => 'reservation', 'as' => 'reservation.'], function () {
     Route::get('/confirm', [ReservationController::class, 'confirm'])->name('confirm');
     Route::post('/confirm', [ReservationController::class, 'store'])->name('store');
-    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::get('/{id?}', [ReservationController::class, 'index'])->name('index');
 
 });
 

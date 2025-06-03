@@ -11,7 +11,7 @@ interface TimeSlotProps {
   user: User;
   TimeSlot: PaginatedTimeSlot[];
 }
-const props = defineProps<TimeSlotProps>();
+ defineProps<TimeSlotProps>();
 
 
 function goToConfirm(bookableId: number, timeSlotId: number) {
