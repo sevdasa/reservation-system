@@ -14,5 +14,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //     return true;
 // });
 Broadcast::channel('Reservation.bookable.{id}', function ($user, $id) {
-    return true;
-});
+    // return $user->id === (int) $id;
+    return true; // Allow all authenticated users to listen to this channel
+});  

@@ -5,9 +5,10 @@ use App\Http\Controllers\Bookable\DashboardController as BookableDashboardContro
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TimeSlotController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Broadcast;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');

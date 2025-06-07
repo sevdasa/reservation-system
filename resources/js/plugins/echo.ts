@@ -17,6 +17,7 @@ import Pusher from 'pusher-js';
 
 (window as any).Pusher = Pusher;
 
+
 export const echo = new Echo({
   broadcaster: 'reverb',
   key: import.meta.env.VITE_REVERB_APP_KEY,
@@ -26,4 +27,5 @@ export const echo = new Echo({
   encrypted: false,
   disableStats: true,
   enabledTransports: ['ws', 'wss'],
+
 });

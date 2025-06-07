@@ -36,10 +36,10 @@ class ReservationController extends Controller
         if ($slot->isReserved()) {
             return redirect()->route('reservation.index');
         }
-        $reservation= Reservation::where('time_slot_id', $slot->id)
+        $reservation = Reservation::where('time_slot_id', $slot->id)
             ->where('user_id', 2)
             ->first();
-            // dd($reservation);
+        // dd($reservation);
         // dd($request->all(),Auth::guard('web')->user()->id);
         // $slot->update(['is_booked' => true]);
         // $reservation = Reservation::create([
@@ -63,14 +63,36 @@ class ReservationController extends Controller
 
     public function index(Request $request, $id = null)
     {
+        // if ($id) {
+        //    var_dump($id);
+        // }
+        $query = Reservation::where('user_id', 2)
+            ->with(['timeSlot', 'timeSlot.bookable']);
+        if ($request->has('bookable_id') && $request->bookable_id) {
+            $query->whereHas('timeSlot', function ($q) use ($request) {
+                $q->where('bookable_id', $request->bookable_id);
+            });
+        }
 
-        $reservations = Reservation::where('user_id', 2)
-            ->with(['timeSlot', 'timeSlot.bookable'])
-            ->get();
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $reservations = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        $bookables = Bookable::all(['id', 'name']);
 
         return Inertia::render('Reservations/Index', [
             'reservations' => $reservations,
             'bookable_id' => $id,
+            'bookables' => $bookables,
+            'filters' => [
+                'bookable_id' => $id,
+                'date_from' => $request->input('date_from'),
+                'date_to' => $request->input('date_to'),
+            ],
         ]);
     }
 }
