@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch ,reactive,toRefs} from 'vue';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import type { PaginatedReservation ,Reservation} from '@/types/Reservation'; 
 import type { Bookable } from '@/types/Bookable'; 
 import { Inertia } from '@inertiajs/inertia';
 import { echo } from '@/plugins/echo';
 import { Pagination } from '@/types/Pagination';
+import { configureEcho } from '@laravel/echo-vue';
+
+if (typeof window !== 'undefined') {
+  configureEcho({
+    broadcaster: 'reverb',
+  });
+}
 interface showData {
   reservations: PaginatedReservation;
   bookables: Bookable[];
@@ -19,36 +26,37 @@ interface showData {
 
 const props = defineProps<showData>();
 
-// فرم فیلتر با مقادیر پیش‌فرض از props.filters
-const filters = useForm({
-  bookable_id: props.bookable_id || props.filters.bookable_id || '',
-  date_from: props.filters.date_from || '',
-  date_to: props.filters.date_to || '',
-});
+// const filters = toRefs(reactive({
+//   bookable_id: props.bookable_id || props.filters.bookable_id || '',
+//   date_from: props.filters.date_from || '',
+//   date_to: props.filters.date_to || '',
+// }));
 
-watch(() => filters.bookable_id, (newVal) => {
-  console.log('bookable_id changed:', newVal);
-});
-// وقتی فیلترها تغییر کرد، با debounce یا مستقیم درخواست جدید بفرست
-function goToPage(page: number) {
-  console.log('goToPage called with page:', `/reservation?page=${page}&id=${props.bookable_id}`);
+
+// // استفاده از toRefs
+// // const { bookable_id, date_from, date_to } = toRefs(filters);
+
+// watch(() => filters.bookable_id, (newVal) => {
+//   console.log('bookable_id changed:', newVal);
+// });
+// // وقتی فیلترها تغییر کرد، با debounce یا مستقیم درخواست جدید بفرست
+// function goToPage(page: number) {
+//   console.log('goToPage called with page:', `/reservation?page=${page}&id=${props.bookable_id}`);
   
-  Inertia.get(`/reservation?page=${page}&id=${filters.bookable_id}`, { preserveState: true, replace: true });
-}
+//   Inertia.get(`/reservation?page=${page}&id=${filters.bookable_id}`, { preserveState: true, replace: true });
+// }
 
-// console.log(localStorage);
+// // console.log(localStorage);
 
-const messages = ref<string[]>([]);
-// console.log('props.bookable_id', props.bookable_id);
-
-echo.private(`Reservation.bookable.${props.bookable_id}`)
-  .listen('ReservationCreated', (event: { reservation: { reservation_id: number } }) => {
-    console.log(`رزرو جدید با شناسه ${event.reservation.reservation_id} ثبت شد.`);
-    messages.value.push(`رزرو جدید با شناسه ${event.reservation.reservation_id} ثبت شد.`);
-    
-  });
-
-
+// const messages = ref<string[]>([]);
+// // console.log('props.bookable_id', props.bookable_id);
+// if (typeof window !== 'undefined' && props.bookable_id) {
+//   echo.private(`Reservation.bookable.${props.bookable_id}`)
+//     .listen('ReservationCreated', (event: { reservation: { reservation_id: number } }) => {
+//       messages.value.push(`رزرو جدید با شناسه ${event.reservation.reservation_id} ثبت شد.`);
+//       console.log(`رزرو جدید با شناسه ${event.reservation.reservation_id} ثبت شد.`);
+//     });
+// }
 </script>
 
 <template>
@@ -108,7 +116,7 @@ echo.private(`Reservation.bookable.${props.bookable_id}`)
       </li>
     </ul>
 
-    <!--paginations -->
+    <!-- paginatio///ns
    <nav
   v-if="props.reservations.last_page > 1"
   class="flex justify-center space-x-2"
@@ -142,11 +150,11 @@ echo.private(`Reservation.bookable.${props.bookable_id}`)
   >
     بعدی
   </button>
-</nav>
+</nav> -->
 
 
     <!-- پیام‌های اطلاع‌رسانی -->
-    <div v-if="messages.length" class="space-y-3 mt-6">
+    <!-- <div v-if="messages.length" class="space-y-3 mt-6">
       <h2 class="text-xl font-semibold mb-3 text-green-700 dark:text-green-400">پیام‌ها:</h2>
       <ul>
         <li
@@ -162,6 +170,6 @@ echo.private(`Reservation.bookable.${props.bookable_id}`)
 
     <p v-else class="text-gray-500 dark:text-gray-400 text-center mt-6">
       هنوز رزروی ثبت نشده است.
-    </p>
+    </p> -->
   </div>
 </template>

@@ -9,10 +9,11 @@ import { initializeTheme } from './composables/useAppearance';
 import {echo} from '@/plugins/echo';
 import { configureEcho } from '@laravel/echo-vue';
 
-configureEcho({
+if (typeof window !== 'undefined') {
+  configureEcho({
     broadcaster: 'reverb',
-});
-
+  });
+}
 // Extend ImportMeta interface for Vite...
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
